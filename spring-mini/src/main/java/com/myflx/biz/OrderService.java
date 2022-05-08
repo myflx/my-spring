@@ -6,7 +6,6 @@ import com.myflx.spring.annotation.Scope;
 import com.myflx.spring.bean.InitializingBean;
 
 @Component
-@Scope("prototype")
 public class OrderService implements InitializingBean {
     @Autowired
     private OrderDao orderDao;

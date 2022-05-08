@@ -107,7 +107,7 @@ public class AnnotationConfigApplicationContext {
         }
         //实际创建Bean的过程
         Object bean = doCreateBean(definition);
-        singletonObjects.put(beanName, bean);
+        //singletonObjects.put(beanName, bean);
         return bean;
     }
 
@@ -121,6 +121,8 @@ public class AnnotationConfigApplicationContext {
             Class<?> classType = definition.getClassType();
             //实例化
             Object instance = classType.getConstructor().newInstance();
+            //提前暴露对象
+            singletonObjects.put(definition.getBeanName(), instance);
             //属性填充
             populateBean(instance, definition);
             //对象初始化
