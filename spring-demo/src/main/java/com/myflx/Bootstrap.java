@@ -9,5 +9,7 @@ public class Bootstrap {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
         OrderService orderService = (OrderService) context.getBean("orderService");
         orderService.hello();
+
+        context.registerShutdownHook();
     }
 }
