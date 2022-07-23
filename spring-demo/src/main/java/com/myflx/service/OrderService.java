@@ -2,6 +2,7 @@ package com.myflx.service;
 
 import com.myflx.dao.OrderDao;
 import lombok.Setter;
+import org.springframework.aop.SpringProxy;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -30,6 +31,7 @@ public class OrderService implements InitializingBean, DisposableBean, BeanFacto
     public void hello() {
         System.out.println("orderService hello.." + testPopulate);
         orderDao.hello();
+        System.out.println(orderDao instanceof SpringProxy);
     }
 
 
