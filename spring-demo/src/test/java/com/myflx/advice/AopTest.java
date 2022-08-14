@@ -7,6 +7,8 @@ import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.NameMatchMethodPointcut;
 import org.springframework.aop.support.NameMatchMethodPointcutAdvisor;
 
+import java.io.Serializable;
+
 public class AopTest {
 
     @Test
@@ -83,6 +85,21 @@ public class AopTest {
         TargetBean targetBean = (TargetBean) proxyFactory.getProxy();
         targetBean.hello();
         targetBean.hello2();
+    }
+
+    @Test
+    public void testTargetClass() throws Exception {
+        ProxyFactory proxyFactory = new ProxyFactory();
+        proxyFactory.setTarget(new TargetBean());
+        proxyFactory.addAdvice(new SimpleAroundAdvice());
+        proxyFactory.addInterface(Serializable.class);
+        proxyFactory.setProxyTargetClass(true);
+        Object proxy = proxyFactory.getProxy();
+        System.out.println(proxy instanceof TargetBean);
+        //执行结果。。
+//        public java.lang.String com.myflx.advice.TargetBean.hello()开始执行。。。
+//        TargetBean hello...
+//        public java.lang.String com.myflx.advice.TargetBean.hello()执行结果：hello
     }
 }
 

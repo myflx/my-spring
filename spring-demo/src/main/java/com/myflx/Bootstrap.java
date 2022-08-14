@@ -1,6 +1,7 @@
 package com.myflx;
 
 import com.myflx.config.AppConfig;
+import com.myflx.service.AddressService;
 import com.myflx.service.OrderService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -9,6 +10,9 @@ public class Bootstrap {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
         OrderService orderService = (OrderService) context.getBean("orderService");
         orderService.hello();
+
+        AddressService addressService = (AddressService) context.getBean("addressService");
+
 
         context.registerShutdownHook();
     }

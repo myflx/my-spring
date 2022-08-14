@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LogAspect {
 
-    @Before("execution(* com.myflx.dao.OrderDao..*(..))")
+    @Before("execution(* com.myflx.service.AddressService..*(..))")
     public void log() {
         System.out.println("before aspect.....");
     }
