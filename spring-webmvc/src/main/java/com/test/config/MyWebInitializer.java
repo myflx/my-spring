@@ -3,6 +3,8 @@ package com.test.config;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.Filter;
+
 public class MyWebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
@@ -27,5 +29,10 @@ public class MyWebInitializer extends AbstractAnnotationConfigDispatcherServletI
     @Override
     protected ApplicationContextInitializer<?>[] getServletApplicationContextInitializers() {
         return super.getServletApplicationContextInitializers();
+    }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        return super.getServletFilters();
     }
 }
