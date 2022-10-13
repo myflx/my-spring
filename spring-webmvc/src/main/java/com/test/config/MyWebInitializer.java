@@ -4,6 +4,8 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration;
 
 public class MyWebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
@@ -35,4 +37,11 @@ public class MyWebInitializer extends AbstractAnnotationConfigDispatcherServletI
     protected Filter[] getServletFilters() {
         return super.getServletFilters();
     }
+
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        super.customizeRegistration(registration);
+        registration.setMultipartConfig(new MultipartConfigElement(""));
+    }
+
 }

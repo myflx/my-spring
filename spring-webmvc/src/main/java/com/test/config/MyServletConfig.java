@@ -9,12 +9,18 @@ import org.springframework.format.support.FormattingConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.HandlerMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.DelegatingWebMvcConfiguration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.servlet.resource.ResourceUrlProvider;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @ComponentScan(
         value = "com.test",
@@ -46,17 +52,44 @@ public class MyServletConfig extends DelegatingWebMvcConfiguration {
     }
 
     @Bean("/my-http")
-    public MyHttpRequestHandler myHttpRequestHandler(){
+    public MyHttpRequestHandler myHttpRequestHandler() {
         return new MyHttpRequestHandler();
     }
 
     @Bean("/user-action")
-    public UserAction userAction(){
+    public UserAction userAction() {
         return new UserAction();
     }//当前系统依赖---> action jar
 
     @Bean
-    public ActionHandlerAdapter actionHandlerAdapter(){
+    public ActionHandlerAdapter actionHandlerAdapter() {
         return new ActionHandlerAdapter();
     }
+
+    @Bean
+    public WebMvcConfigurer webMvcConfigurer(){
+        return new WebMvcConfigurer() {
+            @Override
+            public void addInterceptors(InterceptorRegistry registry) {
+                registry.addInterceptor(new HandlerInterceptor() {
+                    @Override
+                    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+                        System.out.println("开始处理请求");
+                        return true;
+                    }
+
+                    @Override
+                    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+                        System.out.println("处理请求结束");
+                    }
+
+                    @Override
+                    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+                        System.out.println("处理请求完成");
+                    }
+                });
+            }
+        };
+    }
+
 }
