@@ -9,6 +9,7 @@ import org.springframework.format.support.FormattingConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.accept.ContentNegotiationManager;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.resource.ResourceUrlProvider;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @ComponentScan(
         value = "com.test",
@@ -88,6 +90,16 @@ public class MyServletConfig extends DelegatingWebMvcConfiguration {
                         System.out.println("处理请求完成");
                     }
                 });
+            }
+        };
+    }
+
+    @Bean
+    public WebMvcConfigurer requestSourceMethodResolver(){
+        return new WebMvcConfigurer() {
+            @Override
+            public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+                resolvers.add(new RequestSourceArgHandler());
             }
         };
     }

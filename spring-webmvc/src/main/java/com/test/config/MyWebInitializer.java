@@ -44,4 +44,5 @@ public class MyWebInitializer extends AbstractAnnotationConfigDispatcherServletI
         registration.setMultipartConfig(new MultipartConfigElement(""));
     }
 
+
 }

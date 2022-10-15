@@ -4,8 +4,8 @@ import com.test.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
@@ -23,7 +23,13 @@ public class OrderController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
 
+    @PostMapping("/hello")
     public String hello() {
+        return "Hello OrderController..--->" + orderService.hello();
+    }
+
+    @PostMapping("/hello3")
+    public String hello3(RequestSource requestSource) {
         return "Hello OrderController..--->" + orderService.hello();
     }
 }
