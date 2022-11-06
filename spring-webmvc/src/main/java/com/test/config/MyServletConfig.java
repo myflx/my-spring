@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.accept.ContentNegotiationManager;
@@ -74,6 +75,16 @@ public class MyServletConfig extends DelegatingWebMvcConfiguration {
     public WebMvcConfigurer webMvcConfigurer(){
         return new WebMvcConfigurer() {
             @Override
+            public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+
+            }
+
+            @Override
+            public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+
+            }
+
+            @Override
             public void addInterceptors(InterceptorRegistry registry) {
                 registry.addInterceptor(new HandlerInterceptor() {
                     @Override
@@ -92,6 +103,7 @@ public class MyServletConfig extends DelegatingWebMvcConfiguration {
                         System.out.println("处理请求完成");
                     }
                 });
+
             }
         };
     }

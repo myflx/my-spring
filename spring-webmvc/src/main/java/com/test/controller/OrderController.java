@@ -3,6 +3,7 @@ package com.test.controller;
 import com.test.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,5 +69,18 @@ public class OrderController {
             return "Success";
         });
         return success;
+    }
+
+
+    @PostMapping(value = "/testConsumes",consumes = "text/plain",produces = "application/json;charset=utf-8")
+    public String testConsumes() {
+        return "Hello OrderController..--->" + orderService.hello();
+    }
+
+    @PostMapping(value = "/testConsumes",consumes = "application/json",produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public OrderInfo testConsumes1() {
+        OrderInfo orderInfo = new OrderInfo();
+        orderInfo.setName("你好");
+        return orderInfo;
     }
 }
